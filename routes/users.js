@@ -1,9 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+// Require controller modules.
+var patient_controller = require('../controllers/patientController');
+
+/* GET patient form. */
+router.get('/patient', patient_controller.register_get);
+
+/* POST patient form. */
+router.post('/patient', patient_controller.register_post);
 
 module.exports = router;

@@ -1,0 +1,26 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='username') Nazwa użytkownika:
+      input#username.form-control(type='text' name='username' required='true' value=(undefined===user ? '' : user.username) )
+      label(for='password') Hasło:
+      input#password.form-control(type='password' name='password' required='true' value=(undefined===user ? '' : user.password) )
+    div.form-group
+      label(for='first_name') Imię:
+      input#first_name.form-control(type='text' name='first_name' required='true' value=(undefined===patient ? '' : patient.first_name) )
+      label(for='last_name') Nazwisko:
+      input#last_name.form-control(type='text' name='last_name' required='true' value=(undefined===patient ? '' : patient.last_name) )
+      label(for='pesel') PESEL:
+      input#pesel.form-control(type='number' name='pesel' value=(undefined===patient ? '' : patient.pesel) )
+    div.form-group
+      label(for='email') E-mail:
+      input#email.form-control(type='email' name='email' placeholder='info@example.com' value=(undefined===patient ? '' : patient.email) )
+    button.btn.btn-primary(type='submit') Rejestruj
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
