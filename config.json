@@ -1,4 +1,4 @@
 {
-    "mongo_url" : "insert_your_database_url_here",
+    "mongo_url" : "mongodb+srv://user:YCaskz!sP-73j.W@cluster0.1e0fx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
     "salt": "Super secret salt!"
 }
