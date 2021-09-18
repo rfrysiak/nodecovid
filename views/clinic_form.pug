@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='username') Login:
+      input#username.form-control(type='text' name='username' required='true' value=(undefined===user ? '' : user.name) )
+      label(for='password') Hasło:
+      input#password.form-control(type='password' name='password' required='true' value=(undefined===user ? '' : user.password) )
+    div.form-group
+      label(for='name') Nazwa przychodni:
+      input#first_name.form-control(type='text' name='name' required='true' value=(undefined===clinic ? '' : clinic.name) )
+      label(for='address') Adres przychodni:
+      input#first_name.form-control(type='text' name='address' required='true' value=(undefined===clinic ? '' : clinic.address) )
+    button.btn.btn-primary(type='submit') Rejestruj
+  if errors
+    ul
+      for error in errors
+        li!= error.msg

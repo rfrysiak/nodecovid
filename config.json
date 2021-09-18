@@ -1,4 +1,4 @@
 {
-    "mongo_url" : "insert_your_database_url_here",
+    "mongo_url" : "",
     "salt": "Super secret salt!"
 }
