@@ -4,8 +4,22 @@ block content
   h1= title
   p Welcome to #{title}
 
-  h2 Rejestracja
-  p
-    a(href='/users/patient') Pacjent
-    |  | 
-    a(href='/users/clinic') Przychodnia
+  if username
+    h2 Witaj #{username}!
+    form(method='POST' action='/users/logout')
+      button.btn.btn-primary(type='submit') Wyloguj
+  else
+    h2 Logowanie
+    form(method='POST' action='/users/login')
+      div.form-group
+        label(for='username') Nazwa użytkownika:
+        input#username.form-control(type='text' name='username' required='true' value=(undefined===user ? '' : user.username) )
+        label(for='password') Hasło:
+        input#password.form-control(type='password' name='password' required='true' value=(undefined===user ? '' : user.password) )
+      button.btn.btn-primary(type='submit') Zaloguj
+
+    h2 Rejestracja
+    p
+      a(href='/users/patient') Pacjent
+      |  | 
+      a(href='/users/clinic') Przychodnia

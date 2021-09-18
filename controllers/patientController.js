@@ -61,7 +61,8 @@ exports.register_post = [
                             {
                                 username: req.body.username,
                                 password: hash,
-                                type: patient._id
+                                type: 'patient',
+                                type_id: patient._id
                             });
                         user.save(function (err) {
                             if (err) { return next(err); }
@@ -75,3 +76,8 @@ exports.register_post = [
         }
     }
 ];
+
+// Display Patient dashboard form on GET.
+exports.dashboard_get = function(req, res) {
+    res.render('patient_dashboard', { title: 'Express', sessid: req.session.id, username: req.session.username });
+};
