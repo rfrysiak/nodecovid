@@ -1,0 +1,10 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+
+  if username
+    h2 Witaj #{username}!
+  form(method='POST' action='/users/logout')
+    button.btn.btn-primary(type='submit') Wyloguj

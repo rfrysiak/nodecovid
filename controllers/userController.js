@@ -17,7 +17,7 @@ exports.login_post = function(req, res) {
                 if (hash === user.password) {
                     req.session.userid = user._id;
                     req.session.username = user.username;
-                    res.redirect('/');
+                    res.redirect('/users/' + user.type + '/dashboard');
                 }
                 else {
                     res.send('Błędne hasło!');

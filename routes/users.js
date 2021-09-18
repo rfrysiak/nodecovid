@@ -11,6 +11,9 @@ router.get('/patient', patient_controller.register_get);
 /* POST patient form. */
 router.post('/patient', patient_controller.register_post);
 
+/* GET patient dashboard form. */
+router.get('/patient/dashboard', patient_controller.dashboard_get);
+
 /* POST user login form. */
 router.post('/login', user_controller.login_post);
 
