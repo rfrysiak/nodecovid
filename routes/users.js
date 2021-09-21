@@ -11,7 +11,6 @@ router.get('/patient', patient_controller.register_get);
 /* POST patient form. */
 router.post('/patient', patient_controller.register_post);
 
-module.exports = router;
 /* GET patient dashboard form. */
 router.get('/patient/dashboard', patient_controller.dashboard_get);
 

@@ -1,5 +1,7 @@
 var User = require('../models/user');
 var Patient = require('../models/patient');
+
+var async = require('async');
 var hash = require('pbkdf2-password')();
 var config = require('../config.json');
 
@@ -79,5 +81,16 @@ exports.register_post = [
 
 // Display Patient dashboard form on GET.
 exports.dashboard_get = function(req, res) {
-    res.render('patient_dashboard', { title: 'Express', sessid: req.session.id, username: req.session.username });
+    async.parallel({
+        patient_instance: function(callback) {
+            Patient.findById(req.session.type_id).exec(callback);
+        }
+    }, function(err, results) {
+        if (err) res.send(err);
+        res.render('patient_dashboard', {
+            title: 'Express',
+            sessid: req.session.id,
+            username: req.session.username,
+            patient_instance: results.patient_instance });
+    });
 };

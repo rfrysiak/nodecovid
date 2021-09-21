@@ -6,5 +6,13 @@ block content
 
   if username
     h2 Witaj #{username}!
+
+    h3 Twoje dane
+    p
+      | #[strong Imię]: #{patient_instance.first_name} <br>
+      | #[strong Nazwisko]: #{patient_instance.last_name} <br>
+      | #[strong PESEL]: #{patient_instance.pesel}<br>
+      | #[strong E-mail]: #{patient_instance.email}
+
   form(method='POST' action='/users/logout')
     button.btn.btn-primary(type='submit') Wyloguj
