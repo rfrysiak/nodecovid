@@ -1,11 +1,14 @@
 var User = require('../models/user');
 var Patient = require('../models/patient');
+var Campaign = require('../models/campaign');
+var Vaccination = require('../models/vaccination');
 
 var async = require('async');
 var hash = require('pbkdf2-password')();
 var config = require('../config.json');
 
 const { body,validationResult } = require('express-validator');
+const { DateTime } = require("luxon");
 
 // Display Patient register form on GET.
 exports.register_get = function(req, res, next) {
@@ -84,6 +87,12 @@ exports.dashboard_get = function(req, res) {
     async.parallel({
         patient_instance: function(callback) {
             Patient.findById(req.session.type_id).exec(callback);
+        },
+        campaigns: function(callback) {
+            Campaign.find({}).populate('clinic').exec(callback);
+        },
+        vaccinations: function(callback) {
+            Vaccination.find({ patient: req.session.type_id, done: false }).populate('campaign').exec(callback);
         }
     }, function(err, results) {
         if (err) res.send(err);
@@ -91,6 +100,60 @@ exports.dashboard_get = function(req, res) {
             title: 'Express',
             sessid: req.session.id,
             username: req.session.username,
-            patient_instance: results.patient_instance });
+            patient_instance: results.patient_instance,
+            campaigns: results.campaigns,
+            vaccinations: results.vaccinations
+        });
     });
+};
+
+// Display Patient campaign sign up form on GET.
+exports.signup_1_get = function(req, res) {
+    Campaign.findById(req.params.id).exec(function(err, campaign) {
+        if (err) res.send(err);
+        var dates = [];
+        var start_date = DateTime.fromJSDate(campaign.start_date);
+        var end_date = DateTime.fromJSDate(campaign.end_date);
+        while (start_date.toLocaleString(DateTime.DATE_SHORT) <= end_date.toLocaleString(DateTime.DATE_SHORT)) {
+            dates.push(start_date.toLocaleString(DateTime.DATE_SHORT));
+            start_date = start_date.plus({ days: 1 });
+        }
+        res.render('patient_signup_1_form', {
+            title: 'Rejestracja na szczepienie',
+            campaign_instance: campaign,
+            dates_list: dates
+        });
+    });
+};
+
+// Display Patient campaign sign up form on POST.
+exports.signup_2_post = function(req, res) {
+    Campaign.findById(req.params.id).exec(function(err, campaign) {
+        if (err) res.send(err);
+        var hours = [];
+        var start_date = DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').set({ hour: 10, minute:00 });
+        for (var i = 0; i < 9; i++) {
+            hours.push(start_date.toLocaleString(DateTime.TIME_SIMPLE));
+            start_date = start_date.plus({ minutes: 30 });
+        }
+        res.render('patient_signup_2_form', {
+            title: 'Rejestracja na szczepienie',
+            campaign_instance: campaign,
+            hours_list: hours,
+            start_date: start_date.toLocaleString(DateTime.DATE_SHORT)
+        });
+    });
+};
+
+// Display Patient campaign sign up form on POST.
+exports.signup_3_post = function(req, res) {
+    var vaccination = new Vaccination( {
+        campaign: req.params.id,
+        patient: req.session.type_id,
+        date: DateTime.fromFormat(req.body.date + req.body.hour, 'dd.MM.yyyyHH:mm').toISO(),
+    });
+    vaccination.save(function (err) {
+        if (err) { res.send(err); }
+    });
+    res.redirect('/users/patient/dashboard');
 };

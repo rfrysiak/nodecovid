@@ -6,6 +6,9 @@ block content
 
   if username
     h2 Witaj #{username}!
+    p
+      form(method='POST' action='/users/logout')
+        button.btn.btn-primary(type='submit') Wyloguj
 
     h3 Twoje dane
     p
@@ -14,5 +17,22 @@ block content
       | #[strong PESEL]: #{patient_instance.pesel}<br>
       | #[strong E-mail]: #{patient_instance.email}
 
-  form(method='POST' action='/users/logout')
-    button.btn.btn-primary(type='submit') Wyloguj
+    h3 Twoje nadchodzące szczepienia
+    if vaccinations
+      div.list-group
+        each vaccination in vaccinations
+          a(href="#" class="list-group-item list-group-item-action")
+            div(class="d-flex w-100 justify-content-between")
+              h5 #{vaccination.campaign.name} (#{vaccination.date_formatted})
+            p.mb-1 #{vaccination.campaign.clinic.name}
+
+    h3 Dostępne szczepienia
+    if campaigns
+      div.list-group
+        each campaign, index in campaigns
+          a(href="/users/patient/signup_1/" + campaign._id class="list-group-item list-group-item-action")
+            div(class="d-flex w-100 justify-content-between")
+              h5= campaign.name
+              small Termin: #{campaign.start_date_formatted} - #{campaign.end_date_formatted}
+            p.mb-1 #{campaign.clinic.name}
+            small.text-muted #{campaign.clinic.address}
