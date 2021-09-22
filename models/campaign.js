@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 
+const { DateTime } = require("luxon");
+
 var Schema = mongoose.Schema;
 
 var CampaignSchema = new Schema(
@@ -11,6 +13,18 @@ var CampaignSchema = new Schema(
         end_date: { type: Date, required: true }
     }
 );
+
+CampaignSchema
+.virtual('start_date_formatted')
+.get(function () {
+    return DateTime.fromJSDate(this.start_date).toLocaleString(DateTime.DATE_SHORT);
+});
+
+CampaignSchema
+.virtual('end_date_formatted')
+.get(function () {
+    return DateTime.fromJSDate(this.end_date).toLocaleString(DateTime.DATE_SHORT);
+});
 
 //Export model
 module.exports = mongoose.model('Campaign', CampaignSchema);

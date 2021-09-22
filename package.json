@@ -8,11 +8,13 @@
     "serverstart": "DEBUG=nodecovid:* npm run devstart"
   },
   "dependencies": {
+    "async": "^3.2.1",
     "debug": "~2.6.9",
     "express": "~4.16.1",
     "express-session": "^1.17.2",
     "express-validator": "^6.12.1",
     "http-errors": "~1.6.3",
+    "luxon": "^2.0.2",
     "mongoose": "^6.0.6",
     "morgan": "~1.9.1",
     "pbkdf2-password": "^1.2.1",

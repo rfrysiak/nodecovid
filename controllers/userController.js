@@ -17,6 +17,7 @@ exports.login_post = function (req, res) {
                 if (hash === user.password) {
                     req.session.userid = user._id;
                     req.session.username = user.username;
+                    req.session.type_id = user.type_id;
                     res.redirect('/users/' + user.type + '/dashboard');
                 }
                 else {

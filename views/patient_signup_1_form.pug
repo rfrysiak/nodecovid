@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  h2= campaign_instance.name
+  form(method='POST' action='/users/patient/signup_2/' + campaign_instance._id)
+    div.form-group
+      label(for='date') Termin:
+      select#date.form-control(type='select' name='date' required='true')
+        each val in dates_list
+          option(value=val) #{val}
+    button.btn.btn-primary(type='submit') Dalej

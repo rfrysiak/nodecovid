@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  h2= campaign_instance.name
+  form(method='POST' action='/users/patient/signup_3/' + campaign_instance._id)
+    div.form-group
+      label(for='date') Termin:
+      input#date.form-control(type='text' name='date' value=start_date required='true' readonly)
+      label(for='hour') Godzina:
+      select#hour.form-control(type='select' name='hour' required='true')
+        each val in hours_list
+          option(value=val) #{val}
+    button.btn.btn-primary(type='submit') Rejestruj
