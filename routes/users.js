@@ -31,6 +31,9 @@ router.get('/clinic', clinic_controller.register_get);
 /* POST clinic form. */
 router.post('/clinic', clinic_controller.register_post);
 
+/* GET patient dashboard form. */
+router.get('/clinic/dashboard', clinic_controller.dashboard_get);
+
 /* POST user login form. */
 router.post('/login', user_controller.login_post);
 

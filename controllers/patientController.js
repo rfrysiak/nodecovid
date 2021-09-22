@@ -6,12 +6,13 @@ var Vaccination = require('../models/vaccination');
 var async = require('async');
 var hash = require('pbkdf2-password')();
 var config = require('../config.json');
+var type = 'patient';
 
 const { body,validationResult } = require('express-validator');
 const { DateTime } = require("luxon");
 
 // Display Patient register form on GET.
-exports.register_get = function(req, res, next) {
+exports.register_get = function (req, res, next) {
     res.render('patient_form', { title: 'Rejestracja pacjenta' });
 };
 
@@ -21,7 +22,7 @@ exports.register_post = [
     // Validate and sanitize fields.
     body('username').trim().isLength({ min: 1 }).escape().withMessage('Podaj nazwę użytkownika.')
         .custom(value => {
-            return User.findOne({'username': value}).then(user => {
+            return User.findOne({ 'username': value }).then(user => {
                 if (user) {
                     return Promise.reject('Nazwa użytkownika już istnieje.');
                 }
@@ -60,18 +61,18 @@ exports.register_post = [
                 if (err) { return next(err); }
                 else {
                     // Create an User object.
-                    hash({password: req.body.password, salt: config.salt}, function (err, pass, salt, hash) {
+                    hash({ password: req.body.password, salt: config.salt }, function (err, pass, salt, hash) {
                         if (err) throw err;
                         var user = new User(
                             {
                                 username: req.body.username,
                                 password: hash,
-                                type: 'patient',
+                                type: type,
                                 type_id: patient._id
                             });
                         user.save(function (err) {
                             if (err) { return next(err); }
-    
+
                             // Successful - redirect to new patient record.
                             res.redirect('/');
                         })
