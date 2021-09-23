@@ -75,7 +75,7 @@ exports.register_post = [
 // Display User dashboard form on GET.
 exports.dashboard_get = function (req, res) {
     res.render(
-        'user_dashboard',
+        'clinic_dashboard',
         {
             title: 'Express',
             sessid: req.session.id,
