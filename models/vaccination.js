@@ -6,20 +6,20 @@ var Schema = mongoose.Schema;
 
 var VaccinationSchema = new Schema(
     {
-        campaign: { type: Schema.Types.ObjectId, ref: 'Campaign', required: true},
-        patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true},
-        questionary: { type: Schema.Types.ObjectId, ref: 'Questionary'},
-        vaccine: { type: Schema.Types.ObjectId, ref: 'Vaccine'},
+        campaign: { type: Schema.Types.ObjectId, ref: 'Campaign', required: true },
+        patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+        questionary: { type: Schema.Types.ObjectId, ref: 'Questionary' },
+        vaccine: { type: Schema.Types.ObjectId, ref: 'Vaccine' },
         date: { type: Date, required: true },
-        done: { type: Boolean, default: false}
+        done: { type: Boolean, default: false }
     }
 );
 
 VaccinationSchema
-.virtual('date_formatted')
-.get(function () {
-  return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATETIME_SHORT);
-});
+    .virtual('date_formatted')
+    .get(function () {
+        return DateTime.fromJSDate(this.date).toLocaleString(DateTime.DATETIME_SHORT);
+    });
 
 //Export model
 module.exports = mongoose.model('Vaccination', VaccinationSchema);
