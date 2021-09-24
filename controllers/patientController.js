@@ -139,17 +139,33 @@ exports.signup_1_get = function(req, res) {
 exports.signup_2_post = function(req, res) {
     Campaign.findById(req.params.id).exec(function(err, campaign) {
         if (err) res.send(err);
-        var hours = [];
-        var start_date = DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').set({ hour: 10, minute:00 });
-        for (var i = 0; i < 9; i++) {
-            hours.push(start_date.toLocaleString(DateTime.TIME_SIMPLE));
-            start_date = start_date.plus({ minutes: 30 });
-        }
-        res.render('patient_signup_2_form', {
-            title: 'Rejestracja na szczepienie',
-            campaign_instance: campaign,
-            hours_list: hours,
-            start_date: start_date.toLocaleString(DateTime.DATE_SHORT)
+        Vaccination.find( { date: { 
+            $gte: DateTime.fromFormat(req.body.date, 'dd.MM.yyyy'),
+            $lte: DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').plus({ days: 1 })
+        } }).exec(function(err, vaccinations) {
+            if (err) res.send(err);
+            if (vaccinations) {
+                var taked = [];
+                vaccinations.forEach(function(vac) {
+                    taked.push(DateTime.fromJSDate(vac.date).toLocaleString(DateTime.TIME_SIMPLE));
+                });
+                var hours = [];
+                var start_date = DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').set({ hour: 10, minute:00 });
+                for (var i = 0; i < 9; i++) {
+                    hours.push(start_date.toLocaleString(DateTime.TIME_SIMPLE));
+                    start_date = start_date.plus({ minutes: 30 });
+                }
+                for (const key in taked) {
+                    var pos = hours.indexOf(taked[key]);
+                    hours.splice(pos, 1);
+                }
+                res.render('patient_signup_2_form', {
+                    title: 'Rejestracja na szczepienie',
+                    campaign_instance: campaign,
+                    hours_list: hours,
+                    start_date: start_date.toLocaleString(DateTime.DATE_SHORT)
+                });        
+            }
         });
     });
 };
