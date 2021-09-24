@@ -2,6 +2,7 @@ var User = require('../models/user');
 var Patient = require('../models/patient');
 var Campaign = require('../models/campaign');
 var Vaccination = require('../models/vaccination');
+var Questionary = require('../models/questionary');
 
 var async = require('async');
 var hash = require('pbkdf2-password')();
@@ -89,21 +90,28 @@ exports.dashboard_get = function(req, res) {
         patient_instance: function(callback) {
             Patient.findById(req.session.type_id).exec(callback);
         },
-        campaigns: function(callback) {
-            Campaign.find({}).populate('clinic').exec(callback);
-        },
         vaccinations: function(callback) {
-            Vaccination.find({ patient: req.session.type_id, done: false }).populate('campaign').exec(callback);
+            Vaccination.find({ patient: req.session.type_id, done: false }).populate({ path: 'campaign', populate: { path: 'clinic' } }).exec(callback);
+        },
+        v_list: function(callback) {
+            Vaccination.find({ patient: req.session.type_id, done: false }, 'campaign').distinct('campaign').exec(callback);
+        },
+        vaccinated: function(callback) {
+            Vaccination.find({ patient: req.session.type_id, done: true }).populate('campaign').populate('vaccine').exec(callback);
         }
     }, function(err, results) {
         if (err) res.send(err);
-        res.render('patient_dashboard', {
-            title: 'Express',
-            sessid: req.session.id,
-            username: req.session.username,
-            patient_instance: results.patient_instance,
-            campaigns: results.campaigns,
-            vaccinations: results.vaccinations
+        Campaign.find({ _id: { $nin: results.v_list }, done: false }).populate('clinic').exec(function(err, campaigns) {
+            if (err) res.send(err);
+            res.render('patient_dashboard', {
+                title: 'Express',
+                sessid: req.session.id,
+                username: req.session.username,
+                patient_instance: results.patient_instance,
+                campaigns: campaigns,
+                vaccinations: results.vaccinations,
+                vaccinated: results.vaccinated
+            });    
         });
     });
 };
@@ -148,13 +156,34 @@ exports.signup_2_post = function(req, res) {
 
 // Display Patient campaign sign up form on POST.
 exports.signup_3_post = function(req, res) {
+    var questionary = new Questionary();
+    questionary.save(function (err) {
+        if (err) res.send(err);        
+    });
     var vaccination = new Vaccination( {
         campaign: req.params.id,
         patient: req.session.type_id,
+        questionary: questionary._id,
         date: DateTime.fromFormat(req.body.date + req.body.hour, 'dd.MM.yyyyHH:mm').toISO(),
     });
     vaccination.save(function (err) {
         if (err) { res.send(err); }
     });
     res.redirect('/users/patient/dashboard');
+};
+
+// Display Patient vaccination form on GET.
+exports.signout_post = function (req, res) {
+    Vaccination.findById(req.body.id).exec(function(err, vaccination) {
+        if (err) res.send(err);
+        if (vaccination) {
+            Questionary.deleteOne({ _id: vaccination.questionary }).exec(function(err, questionary) {
+                if (err) res.send(err);
+            });
+            Vaccination.deleteOne({ _id: vaccination._id}).exec(function(err, vaccination) {
+                if (err) res.send(err);
+            });
+            res.redirect('/users/patient/dashboard');
+        }
+    });
 };

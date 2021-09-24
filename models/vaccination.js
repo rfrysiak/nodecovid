@@ -8,6 +8,7 @@ var VaccinationSchema = new Schema(
     {
         campaign: { type: Schema.Types.ObjectId, ref: 'Campaign', required: true },
         patient: { type: Schema.Types.ObjectId, ref: 'Patient', required: true },
+        questionary: { type: Schema.Types.ObjectId, ref: 'Questionary' },
         vaccine: { type: Schema.Types.ObjectId, ref: 'Vaccine' },
         date: { type: Date, required: true },
         done: { type: Boolean, default: false }
