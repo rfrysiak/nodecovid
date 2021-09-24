@@ -1,0 +1,280 @@
+extends layout
+
+block content
+  form(method='POST' action='')
+    div.container
+      div.row
+        p
+          big
+            b Kwestionariusz wstępnego wywiadu przesiewowego przed szczepieniem osoby dorosłej przeciw COVID-19
+        p
+          big
+            b Kwestionariusz należy wypełnić <u>przed wizytą w punkcie szczepień.</u>
+        p Odpowiedź na poniższe pytania pozwoli personelowi kwalifikującemu do szczepienia zdecydować czy można u
+          | Pani/Pana wykonać w dniu dzisiejszym szczepienie przeciw COVID-19. Odpowiedzi będą wykorzystane w czasie
+          | kwalifikacji do szczepienia. Osoba kwalifikująca może zadać dodatkowe pytania. W przypadku niejasności, należy
+          | poprosić o wyjaśnienie pracownika medycznego kwalifikującego lub realizującego szczepienie. 
+      div.row
+        div(class="col col-lg-1")
+          b Lp.
+        div.col
+          b Pytania wstępne
+        div(class="col col-lg-2")
+      div.row
+        div(class="col col-lg-1") 1.
+        div.col Czy w ciągu ostatnich 30 dni miała Pani/miał Pan dodatni wynik testu genetycznego lub antygenowego w kierunku wirusa SARS-CoV-2?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw1t.form-check-input(type='radio' name="question1" value='yes' checked=(undefined===body ? false : body.question1==='yes'))
+            label(for='pw1t') Tak
+          div(class="form-check form-check-inline")
+            input#pw1n.form-check-input(type='radio' name="question1" value='no' checked=(undefined===body ? false : body.question1==='no'))
+            label(for='pw1n') Nie
+      div.row
+        div(class="col col-lg-1") 2.
+        div.col Czy w ciągu ostatnich 14 dni miała Pani/miał Pan bliski kontakt lub mieszka z osobą, która uzyskała dodatni wynik testu genetycznego lub antygenowego w
+          | kierunku wirusa SARS-CoV-2 lub mieszka z osobą, która miała w tym okresie objawy COVID-19 (wymienione w pyt. 3–5)? 
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw2t.form-check-input(type='radio' name="question2" value='yes' checked=(undefined===body ? false : body.question2==='yes'))
+            label(for='pw2t') Tak
+          div(class="form-check form-check-inline")
+            input#pw2n.form-check-input(type='radio' name="question2" value='no' checked=(undefined===body ? false : body.question2==='no'))
+            label(for='pw2n') Nie
+      div.row
+        div(class="col col-lg-1") 3.
+        div.col Czy w ciągu ostatnich 14 dni miała Pani/miał Pan podwyższoną temperaturę ciała lub gorączkę?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw3t.form-check-input(type='radio' name="question3" value='yes' checked=(undefined===body ? false : body.question3==='yes'))
+            label(for='pw3t') Tak
+          div(class="form-check form-check-inline")
+            input#pw3n.form-check-input(type='radio' name="question3" value='no' checked=(undefined===body ? false : body.question3==='no'))
+            label(for='pw3n') Nie
+      div.row
+        div(class="col col-lg-1") 4.
+        div.col Czy w ciągu ostatnich 14 dni występował u Pani/Pana nowy, utrzymujący się kaszel lub nasilenie kaszlu przewlekłego z powodu rozpoznanej choroby przewlekłej?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw4t.form-check-input(type='radio' name="question4" value='yes' checked=(undefined===body ? false : body.question4==='yes'))
+            label(for='pw4t') Tak
+          div(class="form-check form-check-inline")
+            input#pw4n.form-check-input(type='radio' name="question4" value='no' checked=(undefined===body ? false : body.question4==='no'))
+            label(for='pw4n') Nie
+      div.row
+        div(class="col col-lg-1") 5.
+        div.col Czy w ciągu ostatnich 14 dni wystąpiła u Pani/Pana utrata węchu lub odczucia smaku?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw5t.form-check-input(type='radio' name="question5" value='yes' checked=(undefined===body ? false : body.question5==='yes'))
+            label(for='pw5t') Tak
+          div(class="form-check form-check-inline")
+            input#pw5n.form-check-input(type='radio' name="question5" value='no' checked=(undefined===body ? false : body.question5==='no'))
+            label(for='pw5n') Nie
+      div.row
+        div(class="col col-lg-1") 6.
+        div.col Czy otrzymała Pani/otrzymał Pan jakąkolwiek szczepionkę w ciągu ostatnich 14 dni?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw6t.form-check-input(type='radio' name="question6" value='yes' checked=(undefined===body ? false : body.question6==='yes'))
+            label(for='pw6t') Tak
+          div(class="form-check form-check-inline")
+            input#pw6n.form-check-input(type='radio' name="question6" value='no' checked=(undefined===body ? false : body.question6==='no'))
+            label(for='pw6n') Nie
+      div.row
+        div(class="col col-lg-1") 7.
+        div.col Czy Pani/Pan czuje się dzisiaj przeziębiony lub ma biegunkę, wymioty?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw7t.form-check-input(type='radio' name="question7" value='yes' checked=(undefined===body ? false : body.question7==='yes'))
+            label(for='pw7t') Tak
+          div(class="form-check form-check-inline")
+            input#pw7n.form-check-input(type='radio' name="question7" value='no' checked=(undefined===body ? false : body.question7==='no'))
+            label(for='pw7n') Nie
+      div.row
+        p
+          small Jeśli odpowiedź na którekolwiek z powyższych pytań jest na TAK (pozytywna), szczepienie przeciw COVID-19
+            | powinno zostać odroczone. Na szczepienie należy zgłosić się wówczas, gdy wszystkie odpowiedzi będą na NIE
+            | (negatywne). W razie wątpliwości należy skontaktować się z punktem szczepień.
+      div.row
+        p
+          big
+            b Kwestionariusz wywiadu przed szczepieniem osoby dorosłej przeciw COVID-19
+      div.row
+        div(class="col col-lg-1")
+          b Lp.
+        div.col
+          b Pytania dotyczące stanu zdrowia
+        div(class="col col-lg-2")
+      div.row
+        div(class="col col-lg-1") 1.
+        div.col Czy dziś czuje się Pani/Pan chora/chory?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw8t.form-check-input(type='radio' name="question8" value='yes' checked=(undefined===body ? false : body.question8==='yes'))
+            label(for='pw8t') Tak
+          div(class="form-check form-check-inline")
+            input#pw8n.form-check-input(type='radio' name="question8" value='no' checked=(undefined===body ? false : body.question8==='no'))
+            label(for='pw8n') Nie
+          div(class="form-check form-check-inline")
+            input#pw8i.form-check-input(type='radio' name="question8" value='idk' checked=(undefined===body ? false : body.question8==='idk'))
+            label(for='pw8n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 2.
+        div.col Czy wystąpiła u Pani/Pana kiedykolwiek ciężka niepożądana reakcja po szczepieniu (dotyczy również pierwszej dawki szczepionki przeciwko
+          | COVID-19)? Jeśli tak, jaka?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw9t.form-check-input(type='radio' name="question9" value='yes' checked=(undefined===body ? false : body.question9==='yes'))
+            label(for='pw9t') Tak
+          div(class="form-check form-check-inline")
+            input#pw9n.form-check-input(type='radio' name="question9" value='no' checked=(undefined===body ? false : body.question9==='no'))
+            label(for='pw9n') Nie
+          div(class="form-check form-check-inline")
+            input#pw9i.form-check-input(type='radio' name="question9" value='idk' checked=(undefined===body ? false : body.question9==='idk'))
+            label(for='pw9n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 3.
+        div.col Czy rozpoznano u Pani/Pana uczulenie na glikol polietylenowy (PEG), polisorbat lub inne substancje wchodzące w skład szczepionki?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw10t.form-check-input(type='radio' name="question10" value='yes' checked=(undefined===body ? false : body.question10==='yes'))
+            label(for='pw10t') Tak
+          div(class="form-check form-check-inline")
+            input#pw10n.form-check-input(type='radio' name="question10" value='no' checked=(undefined===body ? false : body.question10==='no'))
+            label(for='pw10n') Nie
+          div(class="form-check form-check-inline")
+            input#pw10i.form-check-input(type='radio' name="question10" value='idk' checked=(undefined===body ? false : body.question10==='idk'))
+            label(for='pw10n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 4.
+        div.col Czy w przeszłości rozpoznano u Pani/Pana ciężką, uogólnioną reakcję alergiczną (wstrząs anafilaktyczny) po podaniu leku, pokarmu, po
+          | ukąszeniu przez owada?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw11t.form-check-input(type='radio' name="question11" value='yes' checked=(undefined===body ? false : body.question11==='yes'))
+            label(for='pw11t') Tak
+          div(class="form-check form-check-inline")
+            input#pw11n.form-check-input(type='radio' name="question11" value='no' checked=(undefined===body ? false : body.question11==='no'))
+            label(for='pw11n') Nie
+          div(class="form-check form-check-inline")
+            input#pw11i.form-check-input(type='radio' name="question11" value='idk' checked=(undefined===body ? false : body.question11==='idk'))
+            label(for='pw11n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 5.
+        div.col Czy występuje u Pani/Pana zaostrzenie choroby przewlekłej?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw12t.form-check-input(type='radio' name="question12" value='yes' checked=(undefined===body ? false : body.question12==='yes'))
+            label(for='pw12t') Tak
+          div(class="form-check form-check-inline")
+            input#pw12n.form-check-input(type='radio' name="question12" value='no' checked=(undefined===body ? false : body.question12==='no'))
+            label(for='pw12n') Nie
+          div(class="form-check form-check-inline")
+            input#pw12i.form-check-input(type='radio' name="question12" value='idk' checked=(undefined===body ? false : body.question12==='idk'))
+            label(for='pw12n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 6.
+        div.col Czy otrzymuje Pani/Pan leki obniżające odporność (immunosupresyjne, doustne kortykosteroidy – np. prednizon, deksametazon), leki przeciw
+          | nowotworom złośliwym (cytostatyczne), leki zażywane po  przeszczepieniu narządu, radioterapię (napromienianie) lub leczenie
+          | biologiczne z powodu zapalenia stawów, nieswoistego zapalenia jelita (np. choroby Crohna) lub łuszczycy?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw13t.form-check-input(type='radio' name="question13" value='yes' checked=(undefined===body ? false : body.question13==='yes'))
+            label(for='pw13t') Tak
+          div(class="form-check form-check-inline")
+            input#pw13n.form-check-input(type='radio' name="question13" value='no' checked=(undefined===body ? false : body.question13==='no'))
+            label(for='pw13n') Nie
+          div(class="form-check form-check-inline")
+            input#pw13i.form-check-input(type='radio' name="question13" value='idk' checked=(undefined===body ? false : body.question13==='idk'))
+            label(for='pw13n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 7.
+        div.col Czy choruje Pani/Pan na hemofilię lub inne poważne zaburzenia krzepnięcia?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw14t.form-check-input(type='radio' name="question14" value='yes' checked=(undefined===body ? false : body.question14==='yes'))
+            label(for='pw14t') Tak
+          div(class="form-check form-check-inline")
+            input#pw14n.form-check-input(type='radio' name="question14" value='no' checked=(undefined===body ? false : body.question14==='no'))
+            label(for='pw14n') Nie
+          div(class="form-check form-check-inline")
+            input#pw14i.form-check-input(type='radio' name="question14" value='idk' checked=(undefined===body ? false : body.question14==='idk'))
+            label(for='pw14n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 8.
+        div.col Czy rozpoznano u Pani/Pana małopłytkowość indukowaną heparyną (HIT) lub zakrzepicę żył mózgowych?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw15t.form-check-input(type='radio' name="question15" value='yes' checked=(undefined===body ? false : body.question15==='yes'))
+            label(for='pw15t') Tak
+          div(class="form-check form-check-inline")
+            input#pw15n.form-check-input(type='radio' name="question15" value='no' checked=(undefined===body ? false : body.question15==='no'))
+            label(for='pw15n') Nie
+          div(class="form-check form-check-inline")
+            input#pw15i.form-check-input(type='radio' name="question15" value='idk' checked=(undefined===body ? false : body.question15==='idk'))
+            label(for='pw15n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 9.
+        div.col (tylko dla Pań) Czy jest Pani w ciąży?
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw16t.form-check-input(type='radio' name="question16" value='yes' checked=(undefined===body ? false : body.question16==='yes'))
+            label(for='pw16t') Tak
+          div(class="form-check form-check-inline")
+            input#pw16n.form-check-input(type='radio' name="question16" value='no' checked=(undefined===body ? false : body.question16==='no'))
+            label(for='pw16n') Nie
+          div(class="form-check form-check-inline")
+            input#pw16i.form-check-input(type='radio' name="question16" value='idk' checked=(undefined===body ? false : body.question16==='idk'))
+            label(for='pw16n') Nie wiem
+      div.row
+        div(class="col col-lg-1") 10.
+        div.col (tylko dla Pań) Czy karmi Pani dziecko piersią? 
+        div(class="col col-lg-3")
+          div(class="form-check form-check-inline")
+            input#pw17t.form-check-input(type='radio' name="question17" value='yes' checked=(undefined===body ? false : body.question17==='yes'))
+            label(for='pw17t') Tak
+          div(class="form-check form-check-inline")
+            input#pw17n.form-check-input(type='radio' name="question17" value='no' checked=(undefined===body ? false : body.question17==='no'))
+            label(for='pw17n') Nie
+          div(class="form-check form-check-inline")
+            input#pw17i.form-check-input(type='radio' name="question17" value='idk' checked=(undefined===body ? false : body.question17==='idk'))
+            label(for='pw17n') Nie wiem
+      div.row
+        p
+          small Odpowiedź TAK lub NIE WIEM, na którekolwiek pytanie wymaga dodatkowego wyjaśnienia przez personel kwalifikujący do szczepienia. 
+            | Odpowiedź TAK na którekolwiek z pytań 2-8 dotyczących stanu zdrowia jest wskazaniem do przeprowadzenia kwalifikacji przez lekarza.
+      div.row
+        div(class="col col-lg-1")
+          b Lp.
+        div.col
+          b Pytania w miejscu szczepienia
+        div(class="col col-lg-2")
+      div.row
+        div(class="col col-lg-1") 1.
+        div.col Czy ma Pani/Pan wątpliwości do zadanych pytań?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw18t.form-check-input(type='radio' name="question18" value='yes' checked=(undefined===body ? false : body.question18==='yes'))
+            label(for='pw18t') Tak
+          div(class="form-check form-check-inline")
+            input#pw18n.form-check-input(type='radio' name="question18" value='no' checked=(undefined===body ? false : body.question18==='no'))
+            label(for='pw18n') Nie
+      div.row
+        div(class="col col-lg-1") 2.
+        div.col Czy uzyskał Pani/Pan odpowiedzi na zadane pytania?
+        div(class="col col-lg-2")
+          div(class="form-check form-check-inline")
+            input#pw19t.form-check-input(type='radio' name="question19" value='yes' checked=(undefined===body ? false : body.question19==='yes'))
+            label(for='pw19t') Tak
+          div(class="form-check form-check-inline")
+            input#pw19n.form-check-input(type='radio' name="question19" value='no' checked=(undefined===body ? false : body.question19==='no'))
+            label(for='pw19n') Nie
+      div.row
+        p
+          b Oświadczenie
+        p Oświadczam, że dobrowolnie wyrażam zgodę na wykonanie szczepienia przeciw COVID-19. Potwierdzam, że zostały
+          | mi przekazane informacje dotyczące tego szczepienia i je zrozumiałam/zrozumiałem. Zostały mi udzielone również
+          | odpowiedzi na wszystkie zadane przeze mnie pytania i zrozumiałam/zrozumiałem udzielone mi odpowiedzi.
+      div.row
+        button.btn.btn-primary(type='submit') Zapisz
