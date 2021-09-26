@@ -103,6 +103,7 @@ exports.dashboard_get = function (req, res) {
 
 // Display Campaign creation form on GET.
 exports.campaign_create_get = function (req, res, next) {
+    res.params.clinic_id = req.params.clinic_id;
     res.render('campaign_form', { title: 'Tworzenie kampanii' });
 };
 // Handle Campaign creation on POST.

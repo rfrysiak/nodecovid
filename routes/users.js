@@ -31,7 +31,7 @@ var clinic_controller = require('../controllers/clinicController');
 /* GET clinic form. */
 router.get('/clinic/campaign_create/:clinic_id', clinic_controller.campaign_create_get);
 
-/* GET clinic form. */
+/* POST clinic form. */
 router.post('/clinic/campaign_create/:clinic_id', clinic_controller.campaign_create_post);
 
 /* GET clinic form. */
