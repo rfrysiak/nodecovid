@@ -103,22 +103,20 @@ exports.dashboard_get = function (req, res) {
 
 // Display Campaign creation form on GET.
 exports.campaign_create_get = function (req, res, next) {
-    res.params.clinic_id = req.params.clinic_id;
     res.render('campaign_form', { title: 'Tworzenie kampanii' });
 };
 // Handle Campaign creation on POST.
 exports.campaign_create_post = [
-
     // Validate and sanitize fields.
-    body('campaign').trim().isLength({ min: 1 }).escape().withMessage('Podaj nazwę kampanii.')
+    body('name').trim().isLength({ min: 1 }).escape().withMessage('Podaj nazwę kampanii.')
         .custom(value => {
-            return Clinic.findOne({ 'name': value }).then(user => {
-                if (user) {
+            return Campaign.findOne({ 'name': value }).then(campaign => {
+                if (campaign) {
                     return Promise.reject('Podana nazwa kampanii już istnieje.');
                 }
             });
         }),
-    body('desciption').isLength({ min: 10 }).withMessage('Opis musi mieć co najmniej 10 znaków.'),
+    body('description').isLength({ min: 10 }).withMessage('Opis musi mieć co najmniej 10 znaków.'),
     // body('start_date').trim().isLength({ min: 1 }).escape().withMessage('Podaj datę początkową.'),
     // body('end_date').trim().isLength({ min: 1 }).escape().withMessage('Podaj datę końcową.'),
 
@@ -143,7 +141,7 @@ exports.campaign_create_post = [
                 });
             campaign.save((err) => {
                 if (err) { return next(err); }
-                res.redirect('/clinic');
+                res.redirect('/users/clinic/dashboard');
             });
         }
     }
