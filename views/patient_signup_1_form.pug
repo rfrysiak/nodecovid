@@ -1,8 +1,6 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
   h2= campaign_instance.name
   form(method='POST' action='/users/patient/signup_2/' + campaign_instance._id)
     div.form-group
