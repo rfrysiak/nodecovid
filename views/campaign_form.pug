@@ -1,0 +1,27 @@
+extends layout
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='name') Nazwa kampanii:
+      input#name.form-control(type='text' name='name' required='true' value=(undefined===campaign ? '' : campaign.name) )
+      label(for='description') Opis kampanii:
+      input#description.form-control(type='text' name='description' required='true' value=(undefined===campaign ? '' : campaign.description) )
+    div.form-group
+      label(for='start_date') Początek kampanii :
+      input#start_date.form-control(type='date' name='start_date' required='true' value=(undefined===campaign ? '' : campaign.start_date) )
+      label(for='end_date') Koniec kampanii:
+      input#end_date.form-control(type='date' name='end_date' required='true' value=(undefined===campaign ? '' : campaign.end_date) )
+    button.btn.btn-primary(type='submit') Utwórz kampanię
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
+
+//- clinic: { type: Schema.Types.ObjectId, ref: 'Clinic', required: true},
+//- name: { type: String, required: true },
+//- description: { type: String },
+//- start_date: { type: Date, required: true },
+//- end_date: { type: Date, required: true }
