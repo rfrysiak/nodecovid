@@ -11,9 +11,9 @@ block content
       input#password.form-control(type='password' name='password' required='true' value=(undefined===user ? '' : user.password) )
     div.form-group
       label(for='name') Nazwa przychodni:
-      input#first_name.form-control(type='text' name='name' required='true' value=(undefined===clinic ? '' : clinic.name) )
+      input#name.form-control(type='text' name='name' required='true' value=(undefined===clinic ? '' : clinic.name) )
       label(for='address') Adres przychodni:
-      input#first_name.form-control(type='text' name='address' required='true' value=(undefined===clinic ? '' : clinic.address) )
+      input#address.form-control(type='text' name='address' required='true' value=(undefined===clinic ? '' : clinic.address) )
     button.btn.btn-primary(type='submit') Rejestruj
   if errors
     ul

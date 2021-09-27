@@ -29,6 +29,15 @@ router.post('/patient/signout', patient_controller.signout_post);
 var clinic_controller = require('../controllers/clinicController');
 
 /* GET clinic form. */
+router.get('/clinic/campaign_create/:clinic_id', clinic_controller.campaign_create_get);
+
+/* POST clinic form. */
+router.post('/clinic/campaign_create/:clinic_id', clinic_controller.campaign_create_post);
+
+/* POST clinic form. */
+router.post('/clinic/campaign_delete', clinic_controller.campaign_delete_post);
+
+/* GET clinic form. */
 router.get('/clinic', clinic_controller.register_get);
 
 /* POST clinic form. */

@@ -4,11 +4,27 @@ block content
   h1= title
   p Welcome to #{title}
 
-  if username
-    h2 Witaj #{username}!
-  if type
-    h2 Lub (?) #{type}!
-  if display_name
-    h2 Lub (?) #{display_name}!
+  if clinic_instance.name
+    h2 Witaj #{clinic_instance.name}!
+
+  h3 Twoje utworzone kampanie
+  if campaigns
+    div.list-group
+      each campaign in campaigns
+        a(class="list-group-item list-group-item-action")
+          div(class="d-flex w-100 justify-content-between")
+            h5= campaign.name
+            small Termin: #{campaign.start_date_formatted} - #{campaign.end_date_formatted}
+          p.mb-1 #{campaign.clinic.name}
+          small.text-muted #{campaign.clinic.address}
+          form(method='POST' action='/users/clinic/campaign_delete')
+            button.btn.btn-primary.btn-sm.text-right(name="id" value=campaign._id type='submit') Usuń
+  else
+    p Brak zaplanowanych kampanii
+  h3
+    p
+      a(href='/users/clinic/campaign_create/' + clinic_instance._id) Utwórz kampanie
+
+
   form(method='POST' action='/users/logout')
     button.btn.btn-primary(type='submit') Wyloguj
