@@ -10,7 +10,8 @@ var CampaignSchema = new Schema(
         name: { type: String, required: true },
         description: { type: String },
         start_date: { type: Date, required: true },
-        end_date: { type: Date, required: true }
+        end_date: { type: Date, required: true },
+        enabled: { type: Boolean, default: true }
     }
 );
 

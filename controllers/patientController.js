@@ -101,7 +101,7 @@ exports.dashboard_get = function(req, res) {
         }
     }, function(err, results) {
         if (err) res.send(err);
-        Campaign.find({ _id: { $nin: results.v_list }, done: false }).populate('clinic').exec(function(err, campaigns) {
+        Campaign.find({ _id: { $nin: results.v_list }, enabled: true }).populate('clinic').exec(function(err, campaigns) {
             if (err) res.send(err);
             res.render('patient_dashboard', {
                 title: 'Express',

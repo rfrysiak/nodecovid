@@ -8,5 +8,7 @@ block content
         a(class="list-group-item list-group-item-action")
           div(class="d-flex w-100 justify-content-between")
             h5= vaccination.patient.first_name + " " + vaccination.patient.last_name
+          form(method='POST' action='/users/clinic/vaccinated/' + vaccination._id)
+            button.btn.btn-primary.btn-sm.text-right(type='submit') Zaszczepiony
   else
     p Brak zapisanych pacjentów

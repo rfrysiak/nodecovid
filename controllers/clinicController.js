@@ -89,7 +89,7 @@ exports.dashboard_get = function (req, res) {
             Clinic.findById(req.session.type_id).exec(callback);
         },
         campaigns: function (callback) {
-            Campaign.find({ clinic: req.session.type_id }).populate('clinic').exec(callback);
+            Campaign.find({ clinic: req.session.type_id, enabled: true }).populate('clinic').exec(callback);
         }
     }, function (err, results) {
         res.render(
@@ -153,12 +153,12 @@ exports.campaign_create_post = [
 ];
 
 exports.campaign_delete_post = function (req, res) {
-    Campaign.findById(req.body.id).exec(function (err, campaign) {
+    Campaign.findByIdAndUpdate(req.body.id, { enabled: false }).exec(function (err, campaign) {
         if (err) res.send(err);
         if (campaign) {
-            Campaign.deleteOne({ _id: campaign._id }).exec(function (err, campaign) {
-                if (err) res.send(err);
-            });
+            // Campaign.deleteOne({ _id: campaign._id }).exec(function (err, campaign) {
+            //     if (err) res.send(err);
+            // });
             res.redirect('/users/clinic/dashboard');
         }
     });
@@ -167,7 +167,7 @@ exports.campaign_delete_post = function (req, res) {
 exports.campaign_list_patients_get = function (req, res) {
     async.parallel({
         vaccinations: function (callback) {
-            Vaccination.find({ campaign: req.params.campaign_id }).populate('patient').populate('vaccine').exec(callback);
+            Vaccination.find({ campaign: req.params.campaign_id, done: false }).populate('patient').populate('vaccine').exec(callback);
         },
         campaign: function (callback) {
             Campaign.findById(req.params.campaign_id).exec(callback);
@@ -181,3 +181,12 @@ exports.campaign_list_patients_get = function (req, res) {
         });
     });
 }
+
+exports.patient_vaccinated_post = function (req, res) {
+    Vaccination.findByIdAndUpdate(req.params.id, { done: true }).exec(function (err, vaccination) {
+        if (err) res.send(err);
+        if (vaccination) {
+            res.redirect('/users/clinic/campaign_list_patients/' + vaccination.campaign);
+        }
+    });
+};
