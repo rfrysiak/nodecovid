@@ -87,16 +87,21 @@ exports.dashboard_get = function (req, res) {
     async.parallel({
         clinic_instance: function (callback) {
             Clinic.findById(req.session.type_id).exec(callback);
+        },
+        campaigns: function (callback) {
+            Campaign.find({ clinic: req.session.type_id }).populate('clinic').exec(callback);
         }
     }, function (err, results) {
         res.render(
             'clinic_dashboard', {
             title: 'Express',
             sessid: req.session.id,
+            campaigns: results.campaigns,
             username: req.session.username,
             clinic_instance: results.clinic_instance,
             type: type
         });
+        // console.log(results.clinic_instance);
     });
 };
 
@@ -146,6 +151,15 @@ exports.campaign_create_post = [
         }
     }
 ];
-// Formularz kampanii szczepień
-// wyświetl listę kampanii i dodaj / usuń z niej pacjentów
-// dla każdej kampanii wyświetlana jest też szczepionka (można dodawać / usuwać szczepionki)
+
+exports.campaign_delete_post = function (req, res) {
+    Campaign.findById(req.body.id).exec(function(err, campaign) {
+        if (err) res.send(err);
+        if (campaign) {
+            Campaign.deleteOne({ _id: campaign._id}).exec(function(err, campaign) {
+                if (err) res.send(err);
+            });
+            res.redirect('/users/clinic/dashboard');
+        }
+    });
+};
