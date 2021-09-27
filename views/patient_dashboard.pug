@@ -29,18 +29,19 @@ block content
     if vaccinations
       div.list-group
         each vaccination in vaccinations
-          a(href="#" class="list-group-item list-group-item-action")
-            div(class="d-flex w-100 justify-content-between")
-              h5 #{vaccination.campaign.name} (#{vaccination.date_formatted})
-            p.mb-1 #{vaccination.campaign.clinic.name}
-            small.text-muted #{vaccination.campaign.clinic.address}
-              p
-              form(method='GET' action='/questionary/' + vaccination.questionary)
-                button.btn.btn-primary.btn-sm(type='submit') Kwestionariusz
+          if vaccinations.campaign
+            a(href="#" class="list-group-item list-group-item-action")
+              div(class="d-flex w-100 justify-content-between")
+                h5 #{vaccination.campaign.name} (#{vaccination.date_formatted})
+              p.mb-1 #{vaccination.campaign.clinic.name}
+              small.text-muted #{vaccination.campaign.clinic.address}
                 p
-              form(method='POST' action='/users/patient/signout')
-                button.btn.btn-primary.btn-sm(name="id" value=vaccination._id type='submit') Zrezygnuj
-          p
+                form(method='GET' action='/questionary/' + vaccination.questionary)
+                  button.btn.btn-primary.btn-sm(type='submit') Kwestionariusz
+                  p
+                form(method='POST' action='/users/patient/signout')
+                  button.btn.btn-primary.btn-sm(name="id" value=vaccination._id type='submit') Zrezygnuj
+            p
     else
       p Brak zaplanowanych szczepień
 

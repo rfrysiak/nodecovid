@@ -1,17 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-
   if clinic_instance.name
     h2 Witaj #{clinic_instance.name}!
+
+  form(method='POST' action='/users/logout')
+    button.btn.btn-primary(type='submit') Wyloguj
 
   h3 Twoje utworzone kampanie
   if campaigns
     div.list-group
       each campaign in campaigns
-        a(class="list-group-item list-group-item-action")
+        a(href='/users/clinic/campaign_list_patients/' + campaign._id class="list-group-item list-group-item-action")
           div(class="d-flex w-100 justify-content-between")
             h5= campaign.name
             small Termin: #{campaign.start_date_formatted} - #{campaign.end_date_formatted}
@@ -23,8 +23,4 @@ block content
     p Brak zaplanowanych kampanii
   h3
     p
-      a(href='/users/clinic/campaign_create/' + clinic_instance._id) Utwórz kampanie
-
-
-  form(method='POST' action='/users/logout')
-    button.btn.btn-primary(type='submit') Wyloguj
+      a(href='/users/clinic/campaign_create/' + clinic_instance._id) Utwórz nową kampanie

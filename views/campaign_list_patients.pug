@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h3 Lista pacjentów zapisanych na #{campaign.name}
+  if vaccinations
+    div.list-group
+      each vaccination in vaccinations
+        a(class="list-group-item list-group-item-action")
+          div(class="d-flex w-100 justify-content-between")
+            h5= vaccination.patient.first_name + " " + vaccination.patient.last_name
+  else
+    p Brak zapisanych pacjentów

@@ -94,7 +94,7 @@ exports.dashboard_get = function (req, res) {
     }, function (err, results) {
         res.render(
             'clinic_dashboard', {
-            title: 'Express',
+            title: 'Zarządzanie kliniką',
             sessid: req.session.id,
             campaigns: results.campaigns,
             username: req.session.username,
@@ -153,13 +153,31 @@ exports.campaign_create_post = [
 ];
 
 exports.campaign_delete_post = function (req, res) {
-    Campaign.findById(req.body.id).exec(function(err, campaign) {
+    Campaign.findById(req.body.id).exec(function (err, campaign) {
         if (err) res.send(err);
         if (campaign) {
-            Campaign.deleteOne({ _id: campaign._id}).exec(function(err, campaign) {
+            Campaign.deleteOne({ _id: campaign._id }).exec(function (err, campaign) {
                 if (err) res.send(err);
             });
             res.redirect('/users/clinic/dashboard');
         }
     });
 };
+
+exports.campaign_list_patients_get = function (req, res) {
+    async.parallel({
+        vaccinations: function (callback) {
+            Vaccination.find({ campaign: req.params.campaign_id }).populate('patient').populate('vaccine').exec(callback);
+        },
+        campaign: function (callback) {
+            Campaign.findById(req.params.campaign_id).exec(callback);
+        },
+    }, function (err, results) {
+        res.render(
+            'campaign_list_patients', {
+            title: 'Lista pacjentów',
+            vaccinations: results.vaccinations,
+            campaign: results.campaign
+        });
+    });
+}
