@@ -140,8 +140,8 @@ exports.signup_2_post = function(req, res) {
     Campaign.findById(req.params.id).exec(function(err, campaign) {
         if (err) res.send(err);
         Vaccination.find( { date: { 
-            $gte: DateTime.fromFormat(req.body.date, 'dd.MM.yyyy'),
-            $lte: DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').plus({ days: 1 })
+            $gte: DateTime.fromFormat(req.body.date, 'd.M.yyyy'),
+            $lte: DateTime.fromFormat(req.body.date, 'd.M.yyyy').plus({ days: 1 })
         } }).exec(function(err, vaccinations) {
             if (err) res.send(err);
             if (vaccinations) {
@@ -150,7 +150,7 @@ exports.signup_2_post = function(req, res) {
                     taked.push(DateTime.fromJSDate(vac.date).toLocaleString(DateTime.TIME_SIMPLE));
                 });
                 var hours = [];
-                var start_date = DateTime.fromFormat(req.body.date, 'dd.MM.yyyy').set({ hour: 10, minute:00 });
+                var start_date = DateTime.fromFormat(req.body.date, 'd.M.yyyy').set({ hour: 10, minute:00 });
                 for (var i = 0; i < 9; i++) {
                     hours.push(start_date.toLocaleString(DateTime.TIME_SIMPLE));
                     start_date = start_date.plus({ minutes: 30 });
@@ -180,7 +180,7 @@ exports.signup_3_post = function(req, res) {
         campaign: req.params.id,
         patient: req.session.type_id,
         questionary: questionary._id,
-        date: DateTime.fromFormat(req.body.date + req.body.hour, 'dd.MM.yyyyHH:mm').toISO(),
+        date: DateTime.fromFormat(req.body.date + req.body.hour, 'd.M.yyyyHH:mm').toISO(),
     });
     vaccination.save(function (err) {
         if (err) { res.send(err); }
